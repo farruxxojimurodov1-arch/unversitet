@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPortal | Talabalar Do'koni</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --border-color: #e2e8f0;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #fbbf24;
+      --border-color: #334155;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg-primary); color: var(--text-primary); transition: var(--transition); }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* HEADER & NAVBAR */
+    header { position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+    [data-theme="dark"] header { background: rgba(15, 23, 42, 0.8); }
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+    .logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-link { font-weight: 600; color: var(--text-secondary); }
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-icon { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+    .badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; font-size: 0.75rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .lang-select { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+
+    /* STORE SECTION */
+    .store-hero { padding: 40px 0 20px; text-align: center; }
+    .store-hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 12px; }
+    .search-box { max-width: 600px; margin: 24px auto 0; position: relative; }
+    .search-input { width: 100%; padding: 16px 20px 16px 50px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; font-size: 1rem; color: var(--text-primary); outline: none; box-shadow: var(--shadow); }
+    .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 1.2rem; }
+
+    /* LAYOUT: PRODUCTS & CART SIDEBAR */
+    .store-layout { display: grid; grid-template-columns: 1fr 380px; gap: 32px; padding: 40px 0 80px; }
+
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+    .product-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); position: relative; display: flex; flex-direction: column; }
+    .product-card:hover { transform: translateY(-50px); transform: translateY(-6px); }
+    .product-img { width: 100%; height: 180px; object-fit: cover; }
+    .product-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .product-price { font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+
+    .btn-fav { position: absolute; top: 12px; right: 12px; background: rgba(255, 255, 255, 0.9); border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; transition: var(--transition); }
+    .btn-fav.active { color: #ef4444; }
+
+    .btn-add-cart { width: 100%; padding: 10px; background: var(--bg-primary); border: 1px solid var(--primary); color: var(--primary); border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .btn-add-cart:hover { background: var(--primary); color: white; }
+
+    /* CART SIDEBAR */
+    .cart-sidebar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); height: fit-content; position: sticky; top: 100px; }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
+    .cart-items { max-height: 320px; overflow-y: auto; margin-bottom: 20px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed var(--border-color); }
+    .cart-item-info h4 { font-size: 0.95rem; font-weight: 700; }
+    .cart-item-info p { font-size: 0.85rem; color: var(--text-secondary); }
+    .cart-item-qty { display: flex; align-items: center; gap: 8px; }
+    .btn-qty { width: 26px; height: 26px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); border-radius: 6px; cursor: pointer; font-weight: 700; }
+    .cart-total { font-size: 1.2rem; font-weight: 800; display: flex; justify-content: space-between; margin-bottom: 20px; }
+
+    .btn-checkout { width: 100%; padding: 14px; background: #10b981; color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition); }
+    .btn-checkout:hover { background: #059669; }
+
+    /* FOOTER */
+    footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 30px 0; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white; padding: 16px 24px; border-radius: 12px; font-weight: 600; transform: translateY(100px); opacity: 0; transition: var(--transition); z-index: 3000; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 992px) {
+      .store-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo"><i class="fa-solid fa-graduation-cap"></i><span>EduPortal</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link" data-i18n="nav_home">Bosh sahifa</a></li>
+        <li><a href="courses.html" class="nav-link" data-i18n="nav_courses">Yo'nalishlar</a></li>
+        <li><a href="store.html" class="nav-link active" data-i18n="nav_store">Talaba do'koni</a></li>
+        <li><a href="favorites.html" class="nav-link" data-i18n="nav_favorites">Tanlanganlar</a></li>
+        <li><a href="about.html" class="nav-link" data-i18n="nav_about">Biz haqimizda</a></li>
+      </ul>
+      <div class="nav-actions">
+        <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+          <option value="uz">UZ</option>
+          <option value="ru">RU</option>
+          <option value="en">EN</option>
+        </select>
+        <button class="btn-icon" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+        <a href="favorites.html" class="btn-icon"><i class="fa-solid fa-heart"></i><span class="badge" id="favCount">0</span></a>
+        <a href="store.html" class="btn-icon"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STORE HERO -->
+  <section class="container store-hero">
+    <h1 data-i18n="store_title">Talabalar Do'koni & Merch</h1>
+    <p style="color: var(--text-secondary);" data-i18n="store_sub">Universitet brendi tushirilgan sifatli mahsulotlar va o'quv qurollari</p>
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" id="searchInput" class="search-input" placeholder="Mahsulot nomini qidiring..." oninput="renderProducts()">
+    </div>
+  </section>
+
+  <!-- STORE LAYOUT -->
+  <main class="container store-layout">
+    <!-- PRODUCTS -->
+    <div class="products-grid" id="productsGrid"></div>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-sidebar">
+      <div class="cart-header">
+        <h3 data-i18n="cart_title"><i class="fa-solid fa-cart-shopping"></i> Savatcha</h3>
+        <span id="cartTotalItems" style="font-weight:700; color:var(--primary);">0 ta</span>
+      </div>
+
+      <div class="cart-items" id="cartItems"></div>
+
+      <div class="cart-total">
+        <span data-i18n="cart_total">Jami:</span>
+        <span id="cartTotalPrice">0 UZS</span>
+      </div>
+
+      <form id="checkoutForm">
+        <div style="margin-bottom:12px;">
+          <input type="text" id="custName" placeholder="Ismingiz va Familiyangiz" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);" required>
+        </div>
+        <div style="margin-bottom:16px;">
+          <input type="tel" id="custPhone" placeholder="+998 90 123 45 67" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);" required>
+        </div>
+        <button type="submit" class="btn-checkout" data-i18n="btn_checkout">Buyurtma berish (TG Bot)</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p data-i18n="footer_rights">© 2026 EduPortal. Barcha huquqlar himoyalangan.</p>
+  </footer>
+
+  <div class="toast" id="toast">Yuborildi!</div>
+
+  <script>
+    const TELEGRAM_BOT_TOKEN = "8994498584:AAGUmq2GPCZC0PjBmvD-zaIOKLO3panfOms";
+    const TELEGRAM_CHAT_ID = "8898937663";
+
+    const productsData = [
+      { id: "p1", name_uz: "EduPortal Xuddi (Hoodie)", name_ru: "Толстовка EduPortal", name_en: "EduPortal Hoodie", price: 250000, img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400" },
+      { id: "p2", name_uz: "Universitet Futbolkasi", name_ru: "Футболка Университета", name_en: "University T-Shirt", price: 120000, img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=400" },
+      { id: "p3", name_uz: "Talaba Ryukzaki (Backpack)", name_ru: "Рюкзак Студента", name_en: "Student Backpack", price: 320000, img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
+      { id: "p4", name_uz: "Brendli Termos (Termo-Flask)", name_ru: "Термос EduPortal", name_en: "Branded Termo-Flask", price: 150000, img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400" },
+      { id: "p5", name_uz: "Klassik Bloknot va Qalam", name_ru: "Блокнот и Ручка", name_en: "Notebook & Pen Set", price: 65000, img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400" },
+      { id: "p6", name_uz: "Simsiz Quloqchin (Earbuds)", name_ru: "Беспроводные Наушники", name_en: "Wireless Earbuds", price: 450000, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" }
+    ];
+
+    const translations = {
+      uz: { nav_home: "Bosh sahifa", nav_courses: "Yo'nalishlar", nav_store: "Talaba do'koni", nav_favorites: "Tanlanganlar", nav_about: "Biz haqimizda", store_title: "Talabalar Do'koni", store_sub: "Universitet brendi tushirilgan sifatli mahsulotlar", cart_title: "Savatcha", cart_total: "Jami:", btn_add: "Savatchaga qo'shish", btn_checkout: "Buyurtma berish (TG Bot)", footer_rights: "© 2026 EduPortal." },
+      ru: { nav_home: "Главная", nav_courses: "Направления", nav_store: "Магазин", nav_favorites: "Избранное", nav_about: "О нас", store_title: "Студенческий Магазин", store_sub: "Качественная брендированная продукция", cart_title: "Корзина", cart_total: "Итого:", btn_add: "В корзину", btn_checkout: "Оформить (TG Bot)", footer_rights: "© 2026 EduPortal." },
+      en: { nav_home: "Home", nav_courses: "Programs", nav_store: "Student Store", nav_favorites: "Favorites", nav_about: "About Us", store_title: "Student Store", store_sub: "Quality university branded merchandise", cart_title: "Shopping Cart", cart_total: "Total:", btn_add: "Add to Cart", btn_checkout: "Checkout (TG Bot)", footer_rights: "© 2026 EduPortal." }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'uz';
+    let currentTheme = localStorage.getItem('theme') || 'light';
+
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.getElementById('langSelect').value = currentLang;
+
+    function renderProducts() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const favs = JSON.parse(localStorage.getItem('fav_products') || '[]');
+      const container = document.getElementById('productsGrid');
+
+      const filtered = productsData.filter(p => {
+        const name = p[`name_${currentLang}`] || p.name_uz;
+        return name.toLowerCase().includes(search);
+      });
+
+      container.innerHTML = filtered.map(p => {
+        const isFav = favs.includes(p.id);
+        const name = p[`name_${currentLang}`] || p.name_uz;
+        return `
+          <div class="product-card">
+            <button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${p.id}')">
+              <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i>
+            </button>
+            <img src="${p.img}" class="product-img" alt="${name}">
+            <div class="product-body">
+              <div>
+                <h3 class="product-title">${name}</h3>
+                <div class="product-price">${p.price.toLocaleString()} UZS</div>
+              </div>
+              <button class="btn-add-cart" onclick="addToCart('${p.id}')">${translations[currentLang].btn_add}</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* CART LOGIC */
+    function getCart() {
+      return JSON.parse(localStorage.getItem('cart') || '[]');
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+      updateBadges();
+    }
+
+    function addToCart(id) {
+      let cart = getCart();
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id, qty: 1 });
+      }
+      saveCart(cart);
+      showToast("Savatchaga qo'shildi!");
+    }
+
+    function updateQty(id, delta) {
+      let cart = getCart();
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
+      }
+      saveCart(cart);
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const container = document.getElementById('cartItems');
+      let total = 0;
+      let totalItemsCount = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p style="text-align:center; color:var(--text-secondary); padding:20px 0;">Savatchangiz bo'sh</p>`;
+        document.getElementById('cartTotalPrice').textContent = "0 UZS";
+        document.getElementById('cartTotalItems').textContent = "0 ta";
+        return;
+      }
+
+      container.innerHTML = cart.map(item => {
+        const prod = productsData.find(p => p.id === item.id);
+        if (!prod) return '';
+        const name = prod[`name_${currentLang}`] || prod.name_uz;
+        const sum = prod.price * item.qty;
+        total += sum;
+        totalItemsCount += item.qty;
+
+        return `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <h4>${name}</h4>
+              <p>${prod.price.toLocaleString()} UZS x ${item.qty}</p>
+            </div>
+            <div class="cart-item-qty">
+              <button class="btn-qty" onclick="updateQty('${item.id}', -1)">-</button>
+              <span style="font-weight:700;">${item.qty}</span>
+              <button class="btn-qty" onclick="updateQty('${item.id}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('cartTotalPrice').textContent = `${total.toLocaleString()} UZS`;
+      document.getElementById('cartTotalItems').textContent = `${totalItemsCount} ta`;
+    }
+
+    /* TELEGRAM CHECKOUT */
+    document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const cart = getCart();
+      if (cart.length === 0) {
+        alert("Savatchangiz bo'sh!");
+        return;
+      }
+
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+
+      let itemsListText = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const prod = productsData.find(p => p.id === item.id);
+        if (prod) {
+          const pName = prod[`name_${currentLang}`] || prod.name_uz;
+          const sum = prod.price * item.qty;
+          total += sum;
+          itemsListText += `${index + 1}. <b>${pName}</b> - ${item.qty} ta x ${prod.price.toLocaleString()} = ${sum.toLocaleString()} UZS\n`;
+        }
+      });
+
+      const message = `🛍 <b>YANGI BUYURTMA (STORE)</b>\n\n` +
+                      `👤 <b>Xaridor:</b> ${name}\n` +
+                      `📞 <b>Tel:</b> ${phone}\n\n` +
+                      `🛒 <b>Mahsulotlar:</b>\n${itemsListText}\n` +
+                      `💰 <b>Jami summa:</b> ${total.toLocaleString()} UZS\n` +
+                      `📅 <b>Sana:</b> ${new Date().toLocaleString()}`;
+
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+        });
+
+        if (res.ok) {
+          showToast("Buyurtmangiz qabul qilindi!");
+          localStorage.removeItem('cart');
+          renderCart();
+          updateBadges();
+          document.getElementById('checkoutForm').reset();
+        } else {
+          alert("Xatolik yuz berdi!");
+        }
+      } catch (err) { alert("Tarmoq xatosi!"); }
+    });
+
+    function toggleFav(id) {
+      let favs = JSON.parse(localStorage.getItem('fav_products') || '[]');
+      if (favs.includes(id)) {
+        favs = favs.filter(i => i !== id);
+      } else {
+        favs.push(id);
+      }
+      localStorage.setItem('fav_products', JSON.stringify(favs));
+      updateBadges();
+      renderProducts();
+    }
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      updateLanguage();
+      renderProducts();
+      renderCart();
+    }
+
+    function updateLanguage() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+      });
+    }
+
+    function updateBadges() {
+      const favs = JSON.parse(localStorage.getItem('fav_courses') || '[]').length + JSON.parse(localStorage.getItem('fav_products') || '[]').length;
+      const cart = getCart().reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('favCount').textContent = favs;
+      document.getElementById('cartCount').textContent = cart;
+    }
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('theme', currentTheme);
+    });
+
+    function showToast(m) {
+      const t = document.getElementById('toast');
+      t.textContent = m;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    updateLanguage();
+    updateBadges();
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>

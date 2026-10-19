@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPortal | Yo'nalishlar va Kurslar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --border-color: #e2e8f0;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #fbbf24;
+      --border-color: #334155;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg-primary); color: var(--text-primary); transition: var(--transition); }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* HEADER & NAVBAR */
+    header { position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+    [data-theme="dark"] header { background: rgba(15, 23, 42, 0.8); }
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+    .logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-link { font-weight: 600; color: var(--text-secondary); }
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-icon { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+    .badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; font-size: 0.75rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .lang-select { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+
+    /* SEARCH & FILTER SECTION */
+    .search-section { padding: 40px 0 20px; text-align: center; }
+    .search-section h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 12px; }
+    .search-box { max-width: 600px; margin: 24px auto 0; position: relative; }
+    .search-input { width: 100%; padding: 16px 20px 16px 50px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; font-size: 1rem; color: var(--text-primary); outline: none; box-shadow: var(--shadow); }
+    .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 1.2rem; }
+
+    /* COURSES GRID */
+    .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; padding: 40px 0 80px; }
+    .course-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); display: flex; flex-direction: column; position: relative; }
+    .course-card:hover { transform: translateY(-6px); }
+    .course-img { width: 100%; height: 200px; object-fit: cover; }
+    .course-body { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
+    .course-tag { font-size: 0.8rem; font-weight: 700; color: var(--primary); background: rgba(37, 99, 235, 0.1); padding: 4px 12px; border-radius: 20px; width: fit-content; margin-bottom: 12px; }
+    .course-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+    .course-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px; flex-grow: 1; }
+    .course-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 16px; }
+    .course-price { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+    
+    .btn-fav { position: absolute; top: 16px; right: 16px; background: rgba(255, 255, 255, 0.9); border: none; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; font-size: 1.1rem; transition: var(--transition); }
+    .btn-fav.active { color: #ef4444; }
+    .btn-apply { padding: 10px 18px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: var(--transition); }
+    .btn-apply:hover { background: var(--primary-hover); }
+
+    /* MODAL */
+    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 2000; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--bg-card); width: 100%; max-width: 480px; padding: 32px; border-radius: var(--radius); border: 1px solid var(--border-color); position: relative; }
+    .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.2rem; cursor: pointer; color: var(--text-secondary); }
+
+    /* FOOTER */
+    footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 30px 0; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white; padding: 16px 24px; border-radius: 12px; font-weight: 600; transform: translateY(100px); opacity: 0; transition: var(--transition); z-index: 3000; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo"><i class="fa-solid fa-graduation-cap"></i><span>EduPortal</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link" data-i18n="nav_home">Bosh sahifa</a></li>
+        <li><a href="courses.html" class="nav-link active" data-i18n="nav_courses">Yo'nalishlar</a></li>
+        <li><a href="store.html" class="nav-link" data-i18n="nav_store">Talaba do'koni</a></li>
+        <li><a href="favorites.html" class="nav-link" data-i18n="nav_favorites">Tanlanganlar</a></li>
+        <li><a href="about.html" class="nav-link" data-i18n="nav_about">Biz haqimizda</a></li>
+      </ul>
+      <div class="nav-actions">
+        <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+          <option value="uz">UZ</option>
+          <option value="ru">RU</option>
+          <option value="en">EN</option>
+        </select>
+        <button class="btn-icon" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+        <a href="favorites.html" class="btn-icon"><i class="fa-solid fa-heart"></i><span class="badge" id="favCount">0</span></a>
+        <a href="store.html" class="btn-icon"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEARCH -->
+  <section class="container search-section">
+    <h1 data-i18n="courses_title">Universitet Yo'nalishlari va Kurslar</h1>
+    <p style="color: var(--text-secondary);" data-i18n="courses_sub">O'zingizga mos bo'lgan ta'lim dasturini toping va ro'yxatdan o'ting</p>
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" id="searchInput" class="search-input" placeholder="Yo'nalish yoki universitet nomini qidiring..." oninput="renderCourses()">
+    </div>
+  </section>
+
+  <!-- COURSES LIST -->
+  <main class="container">
+    <div class="courses-grid" id="coursesGrid"></div>
+  </main>
+
+  <!-- MODAL FOR APPLYING -->
+  <div class="modal" id="applyModal">
+    <div class="modal-content">
+      <i class="fa-solid fa-xmark close-modal" onclick="closeModal()"></i>
+      <h2 style="margin-bottom: 8px;" data-i18n="modal_title">Kursga a'zo bo'lish</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;" id="modalCourseTitle"></p>
+      <form id="courseModalForm">
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom:6px; font-weight:600;" data-i18n="label_name">F.I.SH</label>
+          <input type="text" id="mName" style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);" required>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="display:block; margin-bottom:6px; font-weight:600;" data-i18n="label_phone">Telefon raqam</label>
+          <input type="tel" id="mPhone" placeholder="+998 90 123 45 67" style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);" required>
+        </div>
+        <button type="submit" style="width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer;" data-i18n="btn_submit_m">Arizani Yuborish</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p data-i18n="footer_rights">© 2026 EduPortal. Barcha huquqlar himoyalangan.</p>
+  </footer>
+
+  <div class="toast" id="toast">Yuborildi!</div>
+
+  <script>
+    const TELEGRAM_BOT_TOKEN = "8994498584:AAGUmq2GPCZC0PjBmvD-zaIOKLO3panfOms";
+    const TELEGRAM_CHAT_ID = "8898937663";
+
+    const coursesData = [
+      { id: "c1", title_uz: "Software Engineering", title_ru: "Программная инженерия", title_en: "Software Engineering", uni: "TATU / WIUT", category: "IT", price: "$2,800/yil", img: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500" },
+      { id: "c2", title_uz: "Sun'iy Intelekt & Data Science", title_ru: "Искусственный интеллект", title_en: "AI & Data Science", uni: "Inha / CAU", category: "IT", price: "$3,200/yil", img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500" },
+      { id: "c3", title_uz: "Xalqaro Moliya va Biznes", title_ru: "Международные финансы", title_en: "International Finance", uni: "WIUT / TDIU", category: "Biznes", price: "$3,000/yil", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500" },
+      { id: "c4", title_uz: "Kiberxavfsizlik (Cybersecurity)", title_ru: "Кибербезопасность", title_en: "Cybersecurity", uni: "TATU", category: "IT", price: "$2,600/yil", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=500" },
+      { id: "c5", title_uz: "Arxitektura va Dizayn", title_ru: "Архитектура и Дизайн", title_en: "Architecture & Design", uni: "CAU / TDTU", category: "Dizayn", price: "$2,900/yil", img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=500" },
+      { id: "c6", title_uz: "Raqamli Marketing (Digital Marketing)", title_ru: "Цифровой Маркетинг", title_en: "Digital Marketing", uni: "WIUT", category: "Biznes", price: "$2,400/yil", img: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=500" }
+    ];
+
+    const translations = {
+      uz: { nav_home: "Bosh sahifa", nav_courses: "Yo'nalishlar", nav_store: "Talaba do'koni", nav_favorites: "Tanlanganlar", nav_about: "Biz haqimizda", courses_title: "Universitet Yo'nalishlari", courses_sub: "O'zingizga mos bo'lgan ta'lim dasturini toping", label_name: "F.I.SH", label_phone: "Telefon raqam", btn_apply: "A'zo bo'lish", modal_title: "Kursga ariza topshirish", btn_submit_m: "Yuborish", footer_rights: "© 2026 EduPortal." },
+      ru: { nav_home: "Главная", nav_courses: "Направления", nav_store: "Магазин", nav_favorites: "Избранное", nav_about: "О нас", courses_title: "Направления и Курсы", courses_sub: "Найдите подходящую образовательную программу", label_name: "Ф.И.О", label_phone: "Телефон", btn_apply: "Подать заявку", modal_title: "Заявка на курс", btn_submit_m: "Отправить", footer_rights: "© 2026 EduPortal." },
+      en: { nav_home: "Home", nav_courses: "Programs", nav_store: "Student Store", nav_favorites: "Favorites", nav_about: "About Us", courses_title: "Academic Programs", courses_sub: "Find the best educational program for your career", label_name: "Full Name", label_phone: "Phone Number", btn_apply: "Apply Now", modal_title: "Apply for Course", btn_submit_m: "Submit", footer_rights: "© 2026 EduPortal." }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'uz';
+    let currentTheme = localStorage.getItem('theme') || 'light';
+    let selectedCourse = null;
+
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.getElementById('langSelect').value = currentLang;
+
+    function renderCourses() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const favs = JSON.parse(localStorage.getItem('fav_courses') || '[]');
+      const container = document.getElementById('coursesGrid');
+      
+      const filtered = coursesData.filter(c => {
+        const title = c[`title_${currentLang}`] || c.title_uz;
+        return title.toLowerCase().includes(search) || c.uni.toLowerCase().includes(search);
+      });
+
+      container.innerHTML = filtered.map(c => {
+        const isFav = favs.includes(c.id);
+        const title = c[`title_${currentLang}`] || c.title_uz;
+        return `
+          <div class="course-card">
+            <button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${c.id}')">
+              <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i>
+            </button>
+            <img src="${c.img}" class="course-img" alt="${title}">
+            <div class="course-body">
+              <span class="course-tag">${c.uni}</span>
+              <h3 class="course-title">${title}</h3>
+              <p class="course-desc">Xalqaro standartlar bo'yicha tayyorlangan zamonaviy bakalavr va magistratura dasturi.</p>
+              <div class="course-footer">
+                <span class="course-price">${c.price}</span>
+                <button class="btn-apply" onclick="openModal('${c.id}')">${translations[currentLang].btn_apply}</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleFav(id) {
+      let favs = JSON.parse(localStorage.getItem('fav_courses') || '[]');
+      if (favs.includes(id)) {
+        favs = favs.filter(i => i !== id);
+      } else {
+        favs.push(id);
+      }
+      localStorage.setItem('fav_courses', JSON.stringify(favs));
+      updateBadges();
+      renderCourses();
+    }
+
+    function openModal(id) {
+      selectedCourse = coursesData.find(c => c.id === id);
+      const title = selectedCourse[`title_${currentLang}`] || selectedCourse.title_uz;
+      document.getElementById('modalCourseTitle').textContent = `${title} (${selectedCourse.uni})`;
+      document.getElementById('applyModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('applyModal').classList.remove('active');
+    }
+
+    document.getElementById('courseModalForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('mName').value;
+      const phone = document.getElementById('mPhone').value;
+      const title = selectedCourse[`title_${currentLang}`] || selectedCourse.title_uz;
+
+      const msg = `📚 <b>KURSGA ARIZA</b>\n\n👤 <b>Ism:</b> ${name}\n📞 <b>Tel:</b> ${phone}\n🎓 <b>Kurs:</b> ${title}\n🏛 <b>Uni:</b> ${selectedCourse.uni}`;
+
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'HTML' })
+        });
+        if (res.ok) {
+          showToast("Arizangiz qabul qilindi!");
+          closeModal();
+          document.getElementById('courseModalForm').reset();
+        }
+      } catch (err) { alert("Xatolik!"); }
+    });
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      updateLanguage();
+      renderCourses();
+    }
+
+    function updateLanguage() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+      });
+    }
+
+    function updateBadges() {
+      const favs = JSON.parse(localStorage.getItem('fav_courses') || '[]').length + JSON.parse(localStorage.getItem('fav_products') || '[]').length;
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]').reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('favCount').textContent = favs;
+      document.getElementById('cartCount').textContent = cart;
+    }
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('theme', currentTheme);
+    });
+
+    function showToast(m) {
+      const t = document.getElementById('toast');
+      t.textContent = m;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    updateLanguage();
+    updateBadges();
+    renderCourses();
+  </script>
+</body>
+</html>

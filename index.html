@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPortal | Xalqaro Talabalar Universiteti</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==================== GLOBAL STYLES & VARIABLES ==================== */
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --border-color: #e2e8f0;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      --shadow-lg: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
+      --radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #fbbf24;
+      --border-color: #334155;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 20px 30px -10px rgba(59, 130, 246, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: var(--transition);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==================== HEADER & NAVBAR ==================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    [data-theme="dark"] header {
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .logo i {
+      font-size: 2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-link {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-icon {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .btn-icon:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ef4444;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lang-select {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* ==================== HERO SECTION ==================== */
+    .hero {
+      padding: 80px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .stat-item h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-item p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* ==================== APPLICATION FORM ==================== */
+    .app-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 36px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .app-card h2 {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .app-card p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-submit:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    /* ==================== FEATURES SECTION ==================== */
+    .features {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    /* ==================== FOOTER ==================== */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0 20px;
+      margin-top: 80px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 2000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 992px) {
+      .hero { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>EduPortal</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active" data-i18n="nav_home">Bosh sahifa</a></li>
+        <li><a href="courses.html" class="nav-link" data-i18n="nav_courses">Yo'nalishlar</a></li>
+        <li><a href="store.html" class="nav-link" data-i18n="nav_store">Talaba do'koni</a></li>
+        <li><a href="favorites.html" class="nav-link" data-i18n="nav_favorites">Tanlanganlar</a></li>
+        <li><a href="about.html" class="nav-link" data-i18n="nav_about">Biz haqimizda</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+          <option value="uz">UZ</option>
+          <option value="ru">RU</option>
+          <option value="en">EN</option>
+        </select>
+
+        <button class="btn-icon" id="themeToggle" title="Theme Toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <a href="favorites.html" class="btn-icon" title="Favorites">
+          <i class="fa-solid fa-heart"></i>
+          <span class="badge" id="favCount">0</span>
+        </a>
+
+        <a href="store.html" class="btn-icon" title="Cart">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="badge" id="cartCount">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="container hero">
+    <div class="hero-content">
+      <h1 data-i18n="hero_title">Xalqaro darajadagi ta'lim va kelajak kasblari</h1>
+      <p data-i18n="hero_desc">Kelajagingizni biz bilan birga quring. Zamonaviy xalqaro universitetlar va ta'lim dasturlariga onlayn ariza topshiring.</p>
+      
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>25+</h3>
+          <p data-i18n="stat_unis">Universitetlar</p>
+        </div>
+        <div class="stat-item">
+          <h3>150+</h3>
+          <p data-i18n="stat_courses">Bakalavr/Magistr</p>
+        </div>
+        <div class="stat-item">
+          <h3>12,000+</h3>
+          <p data-i18n="stat_students">Talabalar</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPLICATION FORM -->
+    <div class="app-card">
+      <h2 data-i18n="form_title">O'qishga Ariza Topshirish</h2>
+      <p data-i18n="form_subtitle">Universitet va yo'nalishni tanlang, ma'lumotlaringizni qoldiring.</p>
+
+      <form id="applyForm">
+        <div class="form-group">
+          <label data-i18n="label_name">F.I.SH</label>
+          <input type="text" id="studentName" class="form-control" placeholder="Ismingiz va familiyangiz" required>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="label_phone">Telefon raqam</label>
+          <input type="tel" id="studentPhone" class="form-control" placeholder="+998 90 123 45 67" required>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="label_uni">Universitetni tanlang</label>
+          <select id="universitySelect" class="form-control" required>
+            <option value="Toshkent Axborot Texnologiyalari Universiteti">Toshkent Axborot Texnologiyalari Universiteti (TATU)</option>
+            <option value="Xalqaro Vestminster Universiteti">Xalqaro Vestminster Universiteti (WIUT)</option>
+            <option value="Inha Universiteti">Toshkent shahridagi Inha Universiteti</option>
+            <option value="Toshkent Davlat Iqtisodiyot Universiteti">Toshkent Davlat Iqtisodiyot Universiteti (TDIU)</option>
+            <option value="Akfa Universiteti (Central Asian University)">Central Asian University (AKFA)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="label_faculty">Yo'nalish / Fakultet</label>
+          <select id="facultySelect" class="form-control" required>
+            <option value="Dasturiy Muhandislik (Software Engineering)">Dasturiy Muhandislik</option>
+            <option value="Sun'iy Intelekt va Ma'lumotlar Ilmi">Sun'iy Intelekt & Data Science</option>
+            <option value="Kiberxavfsizlik (Cybersecurity)">Kiberxavfsizlik</option>
+            <option value="Xalqaro Biznes va Moliya">Xalqaro Biznes va Moliya</option>
+            <option value="Arxitektura va Dizayn">Arxitektura va Dizayn</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span data-i18n="btn_apply">Arizani Yuborish</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="container features">
+    <div class="section-title">
+      <h2 data-i18n="features_title">Nima uchun aynan biz?</h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+        <h3 data-i18n="f1_title">Xalqaro Sertifikat</h3>
+        <p data-i18n="f1_desc">Dunyo bo'ylab tan olingan diplom va xalqaro standartlarga mos sifatli ta'lim.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <h3 data-i18n="f2_title">Zamonaviy Amaliyot</h3>
+        <p data-i18n="f2_desc">Nazariya bilan birga real loyihalar ustida amaliy tajriba oshirish imkoniyati.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-user-graduate"></i></div>
+        <h3 data-i18n="f3_title">Grant va Chegirmalar</h3>
+        <p data-i18n="f3_desc">Iqtidorli va faol talabalar uchun 100% gacha bo'lgan ta'lim grantlari.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-content">
+      <div class="logo">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>EduPortal</span>
+      </div>
+      <p data-i18n="footer_rights">© 2026 EduPortal. Barcha huquqlarhimoyalangan.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">Arizangiz muvaffaqiyatli yuborildi!</div>
+
+  <script>
+    /* ==================== TELEGRAM CONFIG ==================== */
+    const TELEGRAM_BOT_TOKEN = "8994498584:AAGUmq2GPCZC0PjBmvD-zaIOKLO3panfOms";
+    const TELEGRAM_CHAT_ID = "8898937663";
+
+    /* ==================== TRANSLATIONS (UZ, RU, EN) ==================== */
+    const translations = {
+      uz: {
+        nav_home: "Bosh sahifa",
+        nav_courses: "Yo'nalishlar",
+        nav_store: "Talaba do'koni",
+        nav_favorites: "Tanlanganlar",
+        nav_about: "Biz haqimizda",
+        hero_title: "Xalqaro darajadagi ta'lim va kelajak kasblari",
+        hero_desc: "Kelajagingizni biz bilan birga quring. Zamonaviy xalqaro universitetlar va ta'lim dasturlariga onlayn ariza topshiring.",
+        stat_unis: "Universitetlar",
+        stat_courses: "Bakalavr/Magistr",
+        stat_students: "Talabalar",
+        form_title: "O'qishga Ariza Topshirish",
+        form_subtitle: "Universitet va yo'nalishni tanlang, ma'lumotlaringizni qoldiring.",
+        label_name: "F.I.SH",
+        label_phone: "Telefon raqam",
+        label_uni: "Universitetni tanlang",
+        label_faculty: "Yo'nalish / Fakultet",
+        btn_apply: "Arizani Yuborish",
+        features_title: "Nima uchun aynan biz?",
+        f1_title: "Xalqaro Sertifikat",
+        f1_desc: "Dunyo bo'ylab tan olingan diplom va xalqaro standartlarga mos sifatli ta'lim.",
+        f2_title: "Zamonaviy Amaliyot",
+        f2_desc: "Nazariya bilan birga real loyihalar ustida amaliy tajriba oshirish imkoniyati.",
+        f3_title: "Grant va Chegirmalar",
+        f3_desc: "Iqtidorli va faol talabalar uchun 100% gacha bo'lgan ta'lim grantlari.",
+        footer_rights: "© 2026 EduPortal. Barcha huquqlar himoyalangan."
+      },
+      ru: {
+        nav_home: "Главная",
+        nav_courses: "Направления",
+        nav_store: "Магазин",
+        nav_favorites: "Избранное",
+        nav_about: "О нас",
+        hero_title: "Образование международного уровня",
+        hero_desc: "Стройте свое будущее вместе с нами. Подайте заявку в современные международные университеты.",
+        stat_unis: "Университеты",
+        stat_courses: "Бакалавр/Магистр",
+        stat_students: "Студенты",
+        form_title: "Заявка на поступление",
+        form_subtitle: "Выберите университет и направление, оставьте свои данные.",
+        label_name: "Ф.И.О",
+        label_phone: "Номер телефона",
+        label_uni: "Выберите университет",
+        label_faculty: "Направление / Факультет",
+        btn_apply: "Отправить заявку",
+        features_title: "Почему именно мы?",
+        f1_title: "Международный диплом",
+        f1_desc: "Диплом, признаваемый во всем мире, и качественное образование.",
+        f2_title: "Современная практика",
+        f2_desc: "Практический опыт работы над реальными проектами во время учебы.",
+        f3_title: "Гранты и скидки",
+        f3_desc: "Образовательные гранты до 100% для талантливых студентов.",
+        footer_rights: "© 2026 EduPortal. Все права защищены."
+      },
+      en: {
+        nav_home: "Home",
+        nav_courses: "Programs",
+        nav_store: "Student Store",
+        nav_favorites: "Favorites",
+        nav_about: "About Us",
+        hero_title: "World-Class Education & Future Careers",
+        hero_desc: "Build your future with us. Apply online to modern international universities and programs.",
+        stat_unis: "Universities",
+        stat_courses: "Bachelor/Master",
+        stat_students: "Students",
+        form_title: "Apply for Admission",
+        form_subtitle: "Select university & major, submit your contact information.",
+        label_name: "Full Name",
+        label_phone: "Phone Number",
+        label_uni: "Select University",
+        label_faculty: "Major / Faculty",
+        btn_apply: "Submit Application",
+        features_title: "Why Choose Us?",
+        f1_title: "International Degree",
+        f1_desc: "Globally recognized degrees and high standards of academic quality.",
+        f2_title: "Practical Training",
+        f2_desc: "Gain hands-on experience working on real-world industry projects.",
+        f3_title: "Grants & Scholarships",
+        f3_desc: "Up to 100% scholarships and financial support for talented students.",
+        footer_rights: "© 2026 EduPortal. All rights reserved."
+      }
+    };
+
+    /* ==================== THEME & LANGUAGE LOGIC ==================== */
+    let currentLang = localStorage.getItem('lang') || 'uz';
+    let currentTheme = localStorage.getItem('theme') || 'light';
+
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.getElementById('langSelect').value = currentLang;
+
+    function updateLanguage() {
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+          element.textContent = translations[currentLang][key];
+        }
+      });
+    }
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      updateLanguage();
+    }
+
+    // Theme Switcher
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('theme', currentTheme);
+      themeBtn.querySelector('i').className = currentTheme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    });
+
+    /* ==================== BADGE COUNTS ==================== */
+    function updateBadges() {
+      const favs = JSON.parse(localStorage.getItem('fav_courses') || '[]').length + JSON.parse(localStorage.getItem('fav_products') || '[]').length;
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]').reduce((sum, item) => sum + item.qty, 0);
+      
+      document.getElementById('favCount').textContent = favs;
+      document.getElementById('cartCount').textContent = cart;
+    }
+
+    /* ==================== TELEGRAM BOT SUBMISSION ==================== */
+    document.getElementById('applyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('studentName').value;
+      const phone = document.getElementById('studentPhone').value;
+      const uni = document.getElementById('universitySelect').value;
+      const faculty = document.getElementById('facultySelect').value;
+
+      const message = `🎓 <b>YANGI ARIZA (UNIVERSITET)</b>\n\n` +
+                      `👤 <b>Talaba:</b> ${name}\n` +
+                      `📞 <b>Tel:</b> ${phone}\n` +
+                      `🏛 <b>Universitet:</b> ${uni}\n` +
+                      `📚 <b>Yo'nalish:</b> ${faculty}\n` +
+                      `📅 <b>Sana:</b> ${new Date().toLocaleString()}`;
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: 'HTML'
+          })
+        });
+
+        if (response.ok) {
+          showToast("Arizangiz muvaffaqiyatli yuborildi!");
+          document.getElementById('applyForm').reset();
+        } else {
+          alert("Xatolik yuz berdi. Iltimos qayta urinib ko'ring.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Tarmoq xatosi!");
+      }
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Init
+    updateLanguage();
+    updateBadges();
+  </script>
+</body>
+</html>

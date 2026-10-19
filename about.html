@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPortal | Biz Haqimizda va Aloqa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --border-color: #e2e8f0;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #fbbf24;
+      --border-color: #334155;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg-primary); color: var(--text-primary); transition: var(--transition); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* HEADER & NAVBAR */
+    header { position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+    [data-theme="dark"] header { background: rgba(15, 23, 42, 0.8); }
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+    .logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-link { font-weight: 600; color: var(--text-secondary); }
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-icon { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+    .badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; font-size: 0.75rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .lang-select { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+
+    /* ABOUT HERO */
+    .about-hero { padding: 60px 0 40px; text-align: center; }
+    .about-hero h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 16px; }
+    .about-hero p { max-width: 700px; margin: 0 auto; color: var(--text-secondary); font-size: 1.1rem; }
+
+    /* MISSION & VISION */
+    .mission-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 40px 0 80px; }
+    .mission-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); }
+    .mission-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
+    .mission-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; }
+    .mission-card p { color: var(--text-secondary); }
+
+    /* CONTACT SECTION */
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; padding: 40px 0 80px; align-items: center; }
+    .contact-info h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; }
+    .contact-info p { color: var(--text-secondary); margin-bottom: 30px; }
+    .contact-item { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .contact-icon { width: 48px; height: 48px; background: rgba(37, 99, 235, 0.1); color: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+
+    .contact-form { background: var(--bg-card); border: 1px solid var(--border-color); padding: 36px; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+    .contact-form h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; }
+    
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+    .form-control { width: 100%; padding: 12px 16px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); outline: none; font-size: 1rem; }
+    textarea.form-control { resize: vertical; min-height: 120px; }
+
+    .btn-send { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .btn-send:hover { background: var(--primary-hover); }
+
+    /* FOOTER */
+    footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 30px 0; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white; padding: 16px 24px; border-radius: 12px; font-weight: 600; transform: translateY(100px); opacity: 0; transition: var(--transition); z-index: 3000; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 992px) {
+      .contact-wrapper { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo"><i class="fa-solid fa-graduation-cap"></i><span>EduPortal</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link" data-i18n="nav_home">Bosh sahifa</a></li>
+        <li><a href="courses.html" class="nav-link" data-i18n="nav_courses">Yo'nalishlar</a></li>
+        <li><a href="store.html" class="nav-link" data-i18n="nav_store">Talaba do'koni</a></li>
+        <li><a href="favorites.html" class="nav-link" data-i18n="nav_favorites">Tanlanganlar</a></li>
+        <li><a href="about.html" class="nav-link active" data-i18n="nav_about">Biz haqimizda</a></li>
+      </ul>
+      <div class="nav-actions">
+        <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+          <option value="uz">UZ</option>
+          <option value="ru">RU</option>
+          <option value="en">EN</option>
+        </select>
+        <button class="btn-icon" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+        <a href="favorites.html" class="btn-icon"><i class="fa-solid fa-heart"></i><span class="badge" id="favCount">0</span></a>
+        <a href="store.html" class="btn-icon"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT HERO -->
+  <section class="container about-hero">
+    <h1 data-i18n="about_title">Talabalar Kelajagini Birgalikda Quramiz</h1>
+    <p data-i18n="about_desc">EduPortal — O'zbekiston va xalqaro oliy ta'lim muassasalari o'rtasidagi raqamli ko'prik. Biz har bir talabaning sifatli ta'lim olishiga ko'maklashamiz.</p>
+  </section>
+
+  <!-- MISSION & VISION -->
+  <main class="container">
+    <div class="mission-grid">
+      <div class="mission-card">
+        <i class="fa-solid fa-bullseye"></i>
+        <h3 data-i18n="m1_title">Bizning Missiyamiz</h3>
+        <p data-i18n="m1_desc">Yoshlarga xalqaro darajadagi eng ilg'or bilim va ko'nikmalarni taqdim etuvchi oliygohlarga oson kirish imkonini yaratish.</p>
+      </div>
+
+      <div class="mission-card">
+        <i class="fa-solid fa-eye"></i>
+        <h3 data-i18n="m2_title">Kelajak Qarashlarimiz</h3>
+        <p data-i18n="m2_desc">Ta'lim jarayonlarini to'liq raqamlashtirish va har bir talaba uchun shaffof va qulay portal bo'lib xizmat qilish.</p>
+      </div>
+
+      <div class="mission-card">
+        <i class="fa-solid fa-handshake"></i>
+        <h3 data-i18n="m3_title">Qadriyatlarimiz</h3>
+        <p data-i18n="m3_desc">Ishonchlilik, shaffoflik, innovatsiya va talabalar muvaffaqiyatiga doimiy ravishda yo'naltirilganlik.</p>
+      </div>
+    </div>
+
+    <!-- CONTACT & FEEDBACK FORM -->
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <h2 data-i18n="contact_title">Biz bilan bog'laning</h2>
+        <p data-i18n="contact_desc">Savollaringiz bormi? Taklif va mulohazalaringizni yuboring, biz siz bilan tezda bog'lanamiz.</p>
+
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div>
+            <h4 style="font-weight:700;">Manzil</h4>
+            <p style="margin:0; font-size:0.9rem;">Toshkent shahri, Amir Temur ko'chasi 108-uy</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+          <div>
+            <h4 style="font-weight:700;">Telefon</h4>
+            <p style="margin:0; font-size:0.9rem;">+998 (71) 200-00-00</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div>
+            <h4 style="font-weight:700;">Email</h4>
+            <p style="margin:0; font-size:0.9rem;">info@eduportal.uz</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3 data-i18n="form_title_c">Xabar Yuborish</h3>
+        <form id="contactForm">
+          <div class="form-group">
+            <label data-i18n="label_name">F.I.SH</label>
+            <input type="text" id="cName" class="form-control" placeholder="Ismingiz va familiyangiz" required>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="label_phone">Telefon raqam</label>
+            <input type="tel" id="cPhone" class="form-control" placeholder="+998 90 123 45 67" required>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="label_msg">Xabaringiz</label>
+            <textarea id="cMessage" class="form-control" placeholder="Savolingiz yoki taklifingizni yozing..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-send" data-i18n="btn_send">Xabarni Yuborish (TG Bot)</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p data-i18n="footer_rights">© 2026 EduPortal. Barcha huquqlar himoyalangan.</p>
+  </footer>
+
+  <div class="toast" id="toast">Yuborildi!</div>
+
+  <script>
+    const TELEGRAM_BOT_TOKEN = "8994498584:AAGUmq2GPCZC0PjBmvD-zaIOKLO3panfOms";
+    const TELEGRAM_CHAT_ID = "8898937663";
+
+    const translations = {
+      uz: {
+        nav_home: "Bosh sahifa", nav_courses: "Yo'nalishlar", nav_store: "Talaba do'koni", nav_favorites: "Tanlanganlar", nav_about: "Biz haqimizda",
+        about_title: "Talabalar Kelajagini Birgalikda Quramiz", about_desc: "EduPortal — O'zbekiston va xalqaro oliy ta'lim muassasalari o'rtasidagi raqamli ko'prik.",
+        m1_title: "Bizning Missiyamiz", m1_desc: "Yoshlarga xalqaro darajadagi eng ilg'or bilim va ko'nikmalarni taqdim etuvchi oliygohlarga oson kirish imkonini yaratish.",
+        m2_title: "Kelajak Qarashlarimiz", m2_desc: "Ta'lim jarayonlarini to'liq raqamlashtirish va har bir talaba uchun shaffof va qulay portal bo'lib xizmat qilish.",
+        m3_title: "Qadriyatlarimiz", m3_desc: "Ishonchlilik, shaffoflik, innovatsiya va talabalar muvaffaqiyatiga doimiy ravishda yo'naltirilganlik.",
+        contact_title: "Biz bilan bog'laning", contact_desc: "Savollaringiz bormi? Taklif va mulohazalaringizni yuboring, biz siz bilan tezda bog'lanamiz.",
+        form_title_c: "Xabar Yuborish", label_name: "F.I.SH", label_phone: "Telefon raqam", label_msg: "Xabaringiz", btn_send: "Xabarni Yuborish (TG Bot)", footer_rights: "© 2026 EduPortal."
+      },
+      ru: {
+        nav_home: "Главная", nav_courses: "Направления", nav_store: "Магазин", nav_favorites: "Избранное", nav_about: "О нас",
+        about_title: "Строим будущее студентов вместе", about_desc: "EduPortal — цифровой мост между вузами Узбекистана и международными университетами.",
+        m1_title: "Наша Миссия", m1_desc: "Предоставить молодежи легкий доступ к лучшим вузам и знаниям международного уровня.",
+        m2_title: "Наше Видение", m2_desc: "Полная цифровизация образовательных процессов и создание удобной платформы для каждого студента.",
+        m3_title: "Наши Ценности", m3_desc: "Надежность, прозрачность, инновации и ориентация на успех студентов.",
+        contact_title: "Свяжитесь с нами", contact_desc: "Есть вопросы? Напишите нам, и мы быстро свяжемся с вами.",
+        form_title_c: "Отправить сообщение", label_name: "Ф.И.О", label_phone: "Номер телефона", label_msg: "Ваше сообщение", btn_send: "Отправить (TG Bot)", footer_rights: "© 2026 EduPortal."
+      },
+      en: {
+        nav_home: "Home", nav_courses: "Programs", nav_store: "Student Store", nav_favorites: "Favorites", nav_about: "About Us",
+        about_title: "Building Students' Future Together", about_desc: "EduPortal is a digital bridge connecting students with leading local and international universities.",
+        m1_title: "Our Mission", m1_desc: "Empowering young people with seamless access to world-class education and prestigious universities.",
+        m2_title: "Our Vision", m2_desc: "Digitalizing educational pathways and providing a transparent portal for every student.",
+        m3_title: "Our Values", m3_desc: "Integrity, transparency, innovation, and commitment to student achievement.",
+        contact_title: "Get in Touch", contact_desc: "Have any questions? Send us a message and we'll reply shortly.",
+        form_title_c: "Send Message", label_name: "Full Name", label_phone: "Phone Number", label_msg: "Your Message", btn_send: "Send Message (TG Bot)", footer_rights: "© 2026 EduPortal."
+      }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'uz';
+    let currentTheme = localStorage.getItem('theme') || 'light';
+
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.getElementById('langSelect').value = currentLang;
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      updateLanguage();
+    }
+
+    function updateLanguage() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+      });
+    }
+
+    function updateBadges() {
+      const favs = JSON.parse(localStorage.getItem('fav_courses') || '[]').length + JSON.parse(localStorage.getItem('fav_products') || '[]').length;
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]').reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('favCount').textContent = favs;
+      document.getElementById('cartCount').textContent = cart;
+    }
+
+    /* CONTACT FORM SUBMISSION TO TELEGRAM BOT */
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('cName').value;
+      const phone = document.getElementById('cPhone').value;
+      const msg = document.getElementById('cMessage').value;
+
+      const messageText = `📩 <b>YANGI BOG'LANISH XABARI</b>\n\n` +
+                          `👤 <b>Ism:</b> ${name}\n` +
+                          `📞 <b>Tel:</b> ${phone}\n` +
+                          `💬 <b>Xabar:</b> ${msg}\n` +
+                          `📅 <b>Sana:</b> ${new Date().toLocaleString()}`;
+
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: messageText, parse_mode: 'HTML' })
+        });
+
+        if (res.ok) {
+          showToast("Xabaringiz yuborildi!");
+          document.getElementById('contactForm').reset();
+        } else {
+          alert("Xatolik yuz berdi!");
+        }
+      } catch (err) { alert("Tarmoq xatosi!"); }
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('theme', currentTheme);
+    });
+
+    function showToast(m) {
+      const t = document.getElementById('toast');
+      t.textContent = m;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    updateLanguage();
+    updateBadges();
+  </script>
+</body>
+</html>

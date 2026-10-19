@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPortal | Tanlanganlar (Izbrannoe)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --border-color: #e2e8f0;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --accent: #fbbf24;
+      --border-color: #334155;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg-primary); color: var(--text-primary); transition: var(--transition); }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* HEADER & NAVBAR */
+    header { position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+    [data-theme="dark"] header { background: rgba(15, 23, 42, 0.8); }
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+    .logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-link { font-weight: 600; color: var(--text-secondary); }
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-icon { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+    .badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; font-size: 0.75rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .lang-select { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+
+    /* HERO */
+    .fav-hero { padding: 40px 0 20px; text-align: center; }
+    .fav-hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 12px; }
+
+    .section-title-sub { font-size: 1.5rem; font-weight: 700; margin: 30px 0 20px; display: flex; align-items: center; gap: 10px; }
+
+    /* GRID LAYOUTS */
+    .fav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-bottom: 40px; }
+    .fav-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); position: relative; display: flex; flex-direction: column; }
+    .fav-card:hover { transform: translateY(-5px); }
+    .fav-img { width: 100%; height: 180px; object-fit: cover; }
+    .fav-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .fav-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+    .fav-meta { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px; }
+
+    .btn-remove-fav { position: absolute; top: 12px; right: 12px; background: rgba(255, 255, 255, 0.9); border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ef4444; font-size: 1.1rem; }
+
+    .btn-action { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); text-align: center; }
+    .btn-action:hover { background: var(--primary-hover); }
+
+    .empty-msg { text-align: center; padding: 40px 0; color: var(--text-secondary); font-size: 1.1rem; }
+
+    /* FOOTER */
+    footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 30px 0; text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 60px; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo"><i class="fa-solid fa-graduation-cap"></i><span>EduPortal</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link" data-i18n="nav_home">Bosh sahifa</a></li>
+        <li><a href="courses.html" class="nav-link" data-i18n="nav_courses">Yo'nalishlar</a></li>
+        <li><a href="store.html" class="nav-link" data-i18n="nav_store">Talaba do'koni</a></li>
+        <li><a href="favorites.html" class="nav-link active" data-i18n="nav_favorites">Tanlanganlar</a></li>
+        <li><a href="about.html" class="nav-link" data-i18n="nav_about">Biz haqimizda</a></li>
+      </ul>
+      <div class="nav-actions">
+        <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+          <option value="uz">UZ</option>
+          <option value="ru">RU</option>
+          <option value="en">EN</option>
+        </select>
+        <button class="btn-icon" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+        <a href="favorites.html" class="btn-icon"><i class="fa-solid fa-heart"></i><span class="badge" id="favCount">0</span></a>
+        <a href="store.html" class="btn-icon"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="container fav-hero">
+    <h1 data-i18n="fav_title"><i class="fa-solid fa-heart" style="color: #ef4444;"></i> Saqlangan Tanlanganlar</h1>
+    <p style="color: var(--text-secondary);" data-i18n="fav_sub">Sizga yoqqan yo'nalishlar va mahsulotlar ro'yxati</p>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <!-- FAVORITE COURSES -->
+    <h2 class="section-title-sub"><i class="fa-solid fa-book-open"></i> <span data-i18n="fav_sec_courses">Tanlangan Yo'nalishlar</span></h2>
+    <div class="fav-grid" id="favCoursesGrid"></div>
+
+    <!-- FAVORITE PRODUCTS -->
+    <h2 class="section-title-sub"><i class="fa-solid fa-bag-shopping"></i> <span data-i18n="fav_sec_products">Tanlangan Mahsulotlar</span></h2>
+    <div class="fav-grid" id="favProductsGrid"></div>
+  </main>
+
+  <footer>
+    <p data-i18n="footer_rights">© 2026 EduPortal. Barcha huquqlar himoyalangan.</p>
+  </footer>
+
+  <script>
+    const coursesData = [
+      { id: "c1", title_uz: "Software Engineering", title_ru: "Программная инженерия", title_en: "Software Engineering", uni: "TATU / WIUT", price: "$2,800/yil", img: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500" },
+      { id: "c2", title_uz: "Sun'iy Intelekt & Data Science", title_ru: "Искусственный интеллект", title_en: "AI & Data Science", uni: "Inha / CAU", price: "$3,200/yil", img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500" },
+      { id: "c3", title_uz: "Xalqaro Moliya va Biznes", title_ru: "Международные финансы", title_en: "International Finance", uni: "WIUT / TDIU", price: "$3,000/yil", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500" },
+      { id: "c4", title_uz: "Kiberxavfsizlik (Cybersecurity)", title_ru: "Кибербезопасность", title_en: "Cybersecurity", uni: "TATU", price: "$2,600/yil", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=500" },
+      { id: "c5", title_uz: "Arxitektura va Dizayn", title_ru: "Архитектура и Дизайн", title_en: "Architecture & Design", uni: "CAU / TDTU", price: "$2,900/yil", img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=500" },
+      { id: "c6", title_uz: "Raqamli Marketing", title_ru: "Цифровой Маркетинг", title_en: "Digital Marketing", uni: "WIUT", price: "$2,400/yil", img: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=500" }
+    ];
+
+    const productsData = [
+      { id: "p1", name_uz: "EduPortal Xuddi (Hoodie)", name_ru: "Толстовка EduPortal", name_en: "EduPortal Hoodie", price: 250000, img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400" },
+      { id: "p2", name_uz: "Universitet Futbolkasi", name_ru: "Футболка Университета", name_en: "University T-Shirt", price: 120000, img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=400" },
+      { id: "p3", name_uz: "Talaba Ryukzaki (Backpack)", name_ru: "Рюкзак Студента", name_en: "Student Backpack", price: 320000, img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
+      { id: "p4", name_uz: "Brendli Termos (Termo-Flask)", name_ru: "Термос EduPortal", name_en: "Branded Termo-Flask", price: 150000, img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400" },
+      { id: "p5", name_uz: "Klassik Bloknot va Qalam", name_ru: "Блокнот и Ручка", name_en: "Notebook & Pen Set", price: 65000, img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400" },
+      { id: "p6", name_uz: "Simsiz Quloqchin (Earbuds)", name_ru: "Беспроводные Наушники", name_en: "Wireless Earbuds", price: 450000, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" }
+    ];
+
+    const translations = {
+      uz: { nav_home: "Bosh sahifa", nav_courses: "Yo'nalishlar", nav_store: "Talaba do'koni", nav_favorites: "Tanlanganlar", nav_about: "Biz haqimizda", fav_title: "Tanlanganlar", fav_sub: "Sizga yoqqan yo'nalishlar va mahsulotlar", fav_sec_courses: "Tanlangan Yo'nalishlar", fav_sec_products: "Tanlangan Mahsulotlar", empty: "Hech narsa saqlanmagan", btn_apply: "O'tish", footer_rights: "© 2026 EduPortal." },
+      ru: { nav_home: "Главная", nav_courses: "Направления", nav_store: "Магазин", nav_favorites: "Избранное", nav_about: "О нас", fav_title: "Избранное", fav_sub: "Сохраненные курсы и товары", fav_sec_courses: "Избранные Курсы", fav_sec_products: "Избранные Товары", empty: "Ничего не сохранено", btn_apply: "Перейти", footer_rights: "© 2026 EduPortal." },
+      en: { nav_home: "Home", nav_courses: "Programs", nav_store: "Student Store", nav_favorites: "Favorites", nav_about: "About Us", fav_title: "Favorites", fav_sub: "Your saved programs and products", fav_sec_courses: "Favorite Programs", fav_sec_products: "Favorite Products", empty: "Nothing saved yet", btn_apply: "View", footer_rights: "© 2026 EduPortal." }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'uz';
+    let currentTheme = localStorage.getItem('theme') || 'light';
+
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.getElementById('langSelect').value = currentLang;
+
+    function renderFavorites() {
+      const favCourseIds = JSON.parse(localStorage.getItem('fav_courses') || '[]');
+      const favProductIds = JSON.parse(localStorage.getItem('fav_products') || '[]');
+
+      const coursesContainer = document.getElementById('favCoursesGrid');
+      const productsContainer = document.getElementById('favProductsGrid');
+
+      // Courses
+      const savedCourses = coursesData.filter(c => favCourseIds.includes(c.id));
+      if (savedCourses.length === 0) {
+        coursesContainer.innerHTML = `<div class="empty-msg">${translations[currentLang].empty}</div>`;
+      } else {
+        coursesContainer.innerHTML = savedCourses.map(c => {
+          const title = c[`title_${currentLang}`] || c.title_uz;
+          return `
+            <div class="fav-card">
+              <button class="btn-remove-fav" onclick="removeFavCourse('${c.id}')"><i class="fa-solid fa-trash"></i></button>
+              <img src="${c.img}" class="fav-img" alt="${title}">
+              <div class="fav-body">
+                <div>
+                  <h3 class="fav-title">${title}</h3>
+                  <p class="fav-meta">${c.uni} • ${c.price}</p>
+                </div>
+                <a href="courses.html" class="btn-action">${translations[currentLang].btn_apply}</a>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Products
+      const savedProducts = productsData.filter(p => favProductIds.includes(p.id));
+      if (savedProducts.length === 0) {
+        productsContainer.innerHTML = `<div class="empty-msg">${translations[currentLang].empty}</div>`;
+      } else {
+        productsContainer.innerHTML = savedProducts.map(p => {
+          const name = p[`name_${currentLang}`] || p.name_uz;
+          return `
+            <div class="fav-card">
+              <button class="btn-remove-fav" onclick="removeFavProduct('${p.id}')"><i class="fa-solid fa-trash"></i></button>
+              <img src="${p.img}" class="fav-img" alt="${name}">
+              <div class="fav-body">
+                <div>
+                  <h3 class="fav-title">${name}</h3>
+                  <p class="fav-meta">${p.price.toLocaleString()} UZS</p>
+                </div>
+                <a href="store.html" class="btn-action">${translations[currentLang].btn_apply}</a>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function removeFavCourse(id) {
+      let favs = JSON.parse(localStorage.getItem('fav_courses') || '[]');
+      favs = favs.filter(i => i !== id);
+      localStorage.setItem('fav_courses', JSON.stringify(favs));
+      updateBadges();
+      renderFavorites();
+    }
+
+    function removeFavProduct(id) {
+      let favs = JSON.parse(localStorage.getItem('fav_products') || '[]');
+      favs = favs.filter(i => i !== id);
+      localStorage.setItem('fav_products', JSON.stringify(favs));
+      updateBadges();
+      renderFavorites();
+    }
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      updateLanguage();
+      renderFavorites();
+    }
+
+    function updateLanguage() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+      });
+    }
+
+    function updateBadges() {
+      const favs = JSON.parse(localStorage.getItem('fav_courses') || '[]').length + JSON.parse(localStorage.getItem('fav_products') || '[]').length;
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]').reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('favCount').textContent = favs;
+      document.getElementById('cartCount').textContent = cart;
+    }
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('theme', currentTheme);
+    });
+
+    updateLanguage();
+    updateBadges();
+    renderFavorites();
+  </script>
+</body>
+</html>
